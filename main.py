@@ -4,27 +4,57 @@ import l_u
 
 
 def main():
-    # Test the implementation
-    A = np.array(
-        [[7, 3, -1, 2], [3, 8, 1, -4], [-1, 1, 4, -1], [2, -4, -1, 6]], dtype=float
-    )
+    A = np.loadtxt("input/A", delimiter=",", dtype=float)
+    b = np.loadtxt("input/b", delimiter=",", dtype=float)
 
-    P, L, U = l_u.l_u_decomposition(A)
-
-    print("A:")
+    print("Ma trận A:")
     print(A)
-    print("\nP:")
+    print("\nVector b:")
+    print(b)
+    print("\n" + "=" * 50)
+
+    # Giải hệ Ax = b
+    x, P, L, U = l_u.solve_linear_system(A, b)
+
+    print("\nKết quả phân tích LU:")
+    print("\nP (Permutation matrix):")
     print(P)
-    print("\nL:")
+    print("\nL (Lower triangular):")
     print(L)
-    print("\nU:")
+    print("\nU (Upper triangular):")
     print(U)
 
-    # Verify that PA = LU
-    print("\nVerification - PA:")
+    # Kiểm nghiệm
+    print("\n" + "=" * 50)
+    print("Kiểm nghiệm phân tích LU:")
+    print("\nPA:")
     print(np.dot(P, A))
-    print("\nVerification - LU:")
+    print("\nLU:")
     print(np.dot(L, U))
+
+    if np.allclose(np.dot(P, A), np.dot(L, U)):
+        print("\n✓ LU Decomposition verified: PA = LU")
+    else:
+        print("\n✗ LU Decomposition failed")
+
+    # In kết quả giải hệ
+    print("\n" + "=" * 50)
+    print("Nghiệm hệ A @ x = b:")
+    print("\nx =")
+    print(x)
+
+    # Kiểm tra kết quả nghiệm
+    print("\n" + "=" * 50)
+    print("Kiểm tra nghiệm")
+    print("\nAx:")
+    print(np.dot(A, x))
+    print("\nb:")
+    print(b)
+
+    if np.allclose(np.dot(A, x), b):
+        print("\n✓ Nghiệm đúng: A @ x = b")
+    else:
+        print("\n✗ Giải hệ sai")
 
 
 if __name__ == "__main__":
