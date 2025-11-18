@@ -46,7 +46,7 @@ def pivot_matrix(M):
 
         # Nếu phần tử có trị tuyệt đối ở hàng khác j thì tráo hàn đó với hàng j
         if j != pivot_row:
-            id_mat[j, pivot_row] = id_mat[pivot_row, j]
+            id_mat[[j, pivot_row]] = id_mat[[pivot_row, j]]
 
     return id_mat
 
